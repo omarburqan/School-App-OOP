@@ -3,15 +3,17 @@
 
 
 void School::pairTeacherToStudent(size_t ratio){
+	if (m_teachers.size() == 0  || ratio == 0){
+		throw "ratio == 0 || no teachers";
+	}
 	m_lastRatio = ratio;
 	m_map.clear();
-	if (m_teachers.size() == 0 )
-		return;
 	list_students temp_students ;
 	students::iterator it_students = m_students.begin();
 	teachers::iterator it_teachers = m_teachers.begin();
 	if(ratio >0) {
-		for (; it_students != m_students.end() && it_teachers!= m_teachers.end(); ++it_students){ // divide each ratio of students to a teacher 
+		for (; it_students != m_students.end() && it_teachers!= m_teachers.end(); 
+									++it_students){ // divide each ratio of students to a teacher 
 			temp_students.push_back(*it_students);
 			if ( temp_students.size() == ratio  ){
 				m_map[(*it_teachers)->getId()]=  temp_students;
@@ -47,18 +49,22 @@ void School::removeTeacher(size_t id){
         if ( (*it_teachers)->getId() == id ){
 				m_teachers.erase((it_teachers));
 			    pairTeacherToStudent(m_lastRatio);
+			    return;
 		}
     }   
+    throw "no teacher with given Id";
 }
 void School::removeStudent(size_t id){
-	for (students::iterator it_students = m_students.end() -1; 
-							it_students >=  m_students.end(); --it_students) { 
+	students::iterator it_students;
+	for (it_students = m_students.end() -1; 
+							it_students >=  m_students.begin(); --it_students) { 
         if ( (*it_students)->getId() == id ){
 				m_students.erase((it_students));
 			    pairTeacherToStudent(m_lastRatio);
+			    return;
 		}
-    }   
-    
+    }
+    throw "no student with given Id";
 }
 
 

@@ -1,6 +1,7 @@
 #include "test.h"
 #include <iostream>
 
+
 #include <string>
 #include <vector>
 #include <list>
@@ -44,7 +45,8 @@ void test(){
 	c.addTeacher(&t2);
 	c.addTeacher(&t3);
 	
-	c.pairTeacherToStudent(3);
+	
+	c.pairTeacherToStudent(1);
 	id_list names = c.getTeacherNames();
 	for(id_list::iterator iter1 = names.begin(); iter1 != names.end(); iter1++){
 		cout << "Teacher: "<< *iter1 << endl;
