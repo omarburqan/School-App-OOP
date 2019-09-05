@@ -3,7 +3,8 @@
 
 
 void School::pairTeacherToStudent(size_t ratio){
-	
+	m_lastRatio = ratio;
+	m_map.clear();
 	if (m_teachers.size() == 0 )
 		return;
 	list_students temp_students ;
@@ -40,20 +41,24 @@ id_list School::getTeacherNames() {
 	return t_names;
 }
 void School::removeTeacher(size_t id){
-	for (teachers::iterator it_teachers = m_teachers.begin(); 
-							it_teachers !=  m_teachers.end(); ++it_teachers) { 
+	teachers::iterator it_teachers;
+	for (it_teachers = m_teachers.end() - 1; 
+							it_teachers >=  m_teachers.begin(); --it_teachers) { 
         if ( (*it_teachers)->getId() == id ){
 				m_teachers.erase((it_teachers));
+			    pairTeacherToStudent(m_lastRatio);
 		}
     }   
 }
 void School::removeStudent(size_t id){
-	for (students::iterator it_students = m_students.begin(); 
-							it_students !=  m_students.end(); ++it_students) { 
+	for (students::iterator it_students = m_students.end() -1; 
+							it_students >=  m_students.end(); --it_students) { 
         if ( (*it_students)->getId() == id ){
 				m_students.erase((it_students));
+			    pairTeacherToStudent(m_lastRatio);
 		}
     }   
+    
 }
 
 

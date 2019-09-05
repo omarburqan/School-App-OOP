@@ -21,7 +21,7 @@ void test(){
 	Student s5("fat7i",30);
 	Student s6("sob7i",40);
 	Student s7("sameer",10);
-	Student s8("zaara",100); 
+	Student s8("zara",100); 
 	
 	Teacher t1("saheera","biology");
 
@@ -55,10 +55,10 @@ void test(){
 		}
 	}
 	
-	c.removeTeacher(9);
-	cout  << "teacher size after erasing : " << c.getNumOfTeachers() << endl;	
-	c.removeStudent(5);
-	cout  << "student size after erasing : " << c.getNumOfStudents() << endl;
+	c.removeTeacher(11);
+	cout  << endl <<"teacher size after erasing : " << c.getNumOfTeachers() << endl;	
+	c.removeStudent(8);
+	cout  << "student size after erasing : " << c.getNumOfStudents() << endl << endl;
 	
 	
 	names = c.getTeacherNames();

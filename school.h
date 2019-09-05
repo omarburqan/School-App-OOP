@@ -29,6 +29,7 @@ class School{
 		students m_students;
 		teachers m_teachers;
 		map m_map;
+		size_t m_lastRatio;
 };
 void School::addStudent(Student* student){ m_students.push_back(student); }
 

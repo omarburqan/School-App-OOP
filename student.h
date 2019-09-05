@@ -2,16 +2,17 @@
 #define __STUDENT_H__
 
 #include "person.h"
+#include "string.h"
 
 class Student:public Person{
 	public:		
-		inline Student(const std::string&,unsigned char);
+		inline Student(const String&,unsigned char);
 		inline ~Student();
 		inline void action();
 	private:
 		unsigned char m_grade;
 };
-Student::Student(const std::string& name,unsigned char grade):Person(name),m_grade(grade){}
+Student::Student(const String& name,unsigned char grade):Person(name),m_grade(grade){}
 
 Student::~Student(){ }
 
