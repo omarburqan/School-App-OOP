@@ -2,42 +2,58 @@
 #include "school.h"
 
 
-void School::addStudent(Student* student){ m_students.push_back(student); }
-
-void School::addTeacher(Teacher* teacher){ m_teachers.push_back(teacher); }
-
-size_t School::getNumOfStudents() const{ return m_students.size(); }
-
-size_t School::getNumOfTeachers() const{ return m_teachers.size(); }
-
 void School::pairTeacherToStudent(size_t ratio){
-	std::list<Student*> temp_students ;
-	std::vector<Student*>::iterator it_students = m_students.begin();
-	std::vector<Teacher*>::iterator it_teachers = m_teachers.begin();
-	for (; it_students != m_students.end(); ++it_students){ // divide each ratio of students to a teacher 
-		temp_students.push_back(*it_students);
-		if ( temp_students.size() == ratio ){
-			m_map.insert(std::pair<std::string, std::list<Student*> >((*it_teachers)->getName(), temp_students));
+	
+	if (m_teachers.size() == 0 )
+		return;
+	list_students temp_students ;
+	students::iterator it_students = m_students.begin();
+	teachers::iterator it_teachers = m_teachers.begin();
+	if(ratio >0) {
+		for (; it_students != m_students.end() && it_teachers!= m_teachers.end(); ++it_students){ // divide each ratio of students to a teacher 
+			temp_students.push_back(*it_students);
+			if ( temp_students.size() == ratio  ){
+				m_map[(*it_teachers)->getId()]=  temp_students;
+				temp_students.clear();
+				++it_teachers;
+			}	
+		}
+		if (temp_students.size() != 0 ){ // if a teacher gets less than ratio error when not enough teachers and there is students
+			m_map[(*it_teachers)->getId()]=  temp_students;
 			temp_students.clear();
 			++it_teachers;
-		}	
+		}
 	}
 	
-	if (temp_students.size() != 0){ // if a teacher gets less than ratio 
-			m_map.insert(std::pair<std::string, std::list<Student*> >((*it_teachers)->getName(), temp_students));
-			temp_students.clear();
-			++it_teachers;
-	}
 	while (it_teachers != m_teachers.end()){ // other teachers if not enough students will get a null list !!
-		m_map.insert(std::pair<std::string, std::list<Student*> >((*it_teachers)->getName(), std::list<Student*>() ));
+				m_map[(*it_teachers)->getId()]=  temp_students;
 		++it_teachers;
 	}
 }
-/*
-std::list<Student*> School::getTeacherStudents(const std::string& teacherName) const{ 
-	return m_map[teacherName];
-}*/
 
-
+id_list School::getTeacherNames() {
+	id_list t_names;
+	for (teachers::iterator it_teachers = m_teachers.begin(); 
+							it_teachers !=  m_teachers.end(); ++it_teachers){
+		t_names.push_back((*it_teachers)->getId());
+	}
+	return t_names;
+}
+void School::removeTeacher(size_t id){
+	for (teachers::iterator it_teachers = m_teachers.begin(); 
+							it_teachers !=  m_teachers.end(); ++it_teachers) { 
+        if ( (*it_teachers)->getId() == id ){
+				m_teachers.erase((it_teachers));
+		}
+    }   
+}
+void School::removeStudent(size_t id){
+	for (students::iterator it_students = m_students.begin(); 
+							it_students !=  m_students.end(); ++it_students) { 
+        if ( (*it_students)->getId() == id ){
+				m_students.erase((it_students));
+		}
+    }   
+}
 
 

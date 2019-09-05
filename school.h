@@ -7,21 +7,38 @@
 #include <list>
 #include <map>
 
+typedef std::list<Student*> list_students;
+typedef std::vector<Student*> students;
+typedef std::vector<Teacher*> teachers;
+typedef std::map<size_t, list_students > map;
+typedef std::pair<size_t, list_students > pair;
+typedef std::list<size_t> id_list;
+
 class School{
 	public:
-		void addStudent(Student* student);
-		void addTeacher(Teacher* teacher);
-		size_t getNumOfStudents() const;
-		size_t getNumOfTeachers() const;
+		inline void addStudent(Student* student);
+		inline void addTeacher(Teacher* teacher);
+		inline size_t getNumOfStudents() const;
+		inline size_t getNumOfTeachers() const;
 		void pairTeacherToStudent(size_t ratio);
-		std::list<Student*> getTeacherStudents(const std::string& teacherName) const;
-	
+		inline list_students getTeacherStudents(const size_t& teacherId) const;
+		id_list getTeacherNames() ; // extra helping method
+		void removeStudent(size_t id);
+		void removeTeacher(size_t id);
 	private:
-		std::vector<Student*> m_students;
-		std::vector<Teacher*> m_teachers;
-		std::map<std::string, std::list<Student*> > m_map;
-
+		students m_students;
+		teachers m_teachers;
+		map m_map;
 };
+void School::addStudent(Student* student){ m_students.push_back(student); }
 
+void School::addTeacher(Teacher* teacher){  m_teachers.push_back(teacher); }
 
+size_t School::getNumOfStudents() const{ return m_students.size(); }
+
+size_t School::getNumOfTeachers() const{ return m_teachers.size(); }
+
+list_students School::getTeacherStudents(const size_t& teacherId) const{ 
+	return m_map.find(teacherId)->second;
+}
 #endif /*  __SCHOOL_H__ */ 
